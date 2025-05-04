@@ -1,0 +1,38 @@
+
+@startuml containers
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+
+Person(customer, "Клиент", "Подаёт заявку, получает уведомления")
+Person(backOffice, "Менеджер бэк-офиса", "Обрабатывает заявки в АБС")
+Person(callCenterAgent, "Оператор кол-центра", "Работает с заявками с сайта")
+
+
+
+System_Boundary(s1, "Платформа банка") {
+    Container(website, "Сайт банка", "React.JS + PHP")
+    Container(frontendInternetBank, "Frontend Интернет-банка", "ASP.NET MVC")
+    Container(backendInternetBank, "Backend Интернет-банка", ".NET Framework + MS SQL")
+    Container(abs, "АБС", "Oracle + PL/SQL", "Финансы, депозиты, ставки")
+    Container(callCenter, "Система кол-центра", "React + Spring Boot", "Обработка входящих заявок с сайта")
+    Container(smsGateway, "СМС-шлюз", "REST API", "Отправка СМС клиентам")
+}
+
+Rel(customer, website, "Регистрирование заявки")
+Rel(customer, frontendInternetBank, "Регистрирование заявки")
+Rel(frontendInternetBank, backendInternetBank, "Регистрирование заявки")
+Rel(backendInternetBank, abs, "Передача заявки")
+Rel(website, callCenter, "Передача заявки")
+Rel(backendInternetBank, smsGateway, "Отправка СМС")
+Rel(abs, smsGateway, "Отправка СМС")
+
+Rel(backOffice, abs, "Обработка заявки")
+Rel(customer, smsGateway, "Получает уведомление")
+
+Rel(callCenterAgent, callCenter, "Обработка заявки")
+Rel(callCenter, callCenterAgent, "Передача заявки")
+Rel(callCenterAgent, customer, "Обсуждение заявки")
+Rel(callCenter, abs, "Передача заявки")
+Rel(callCenter, smsGateway, "Отправка СМС")
+
+@enduml 

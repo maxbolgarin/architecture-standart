@@ -1,0 +1,25 @@
+
+@startuml context
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+
+Person(callCenter, "Кол-центр", "Обрабатывают заявки")
+Person(back, "Менеджеры бэк-офиса", "Оформляют депозиты")
+Person(front, "Менеджеры фронт-офиса", "Работают с клиентами в отделении")
+Person(customer, "Клиенты", "Клиенты")
+
+
+System(bank, "Платформа банка", "Обрабатывает онлайн-заявки на депозиты")
+
+System_Ext(telecom, "Телеком-оператор", "Передаёт СМС клиентам")
+System_Ext(partnerCC, "Партнёрский колл-центр", "Обрабатывает звонки по заявкам")
+
+Rel(customer, bank, "Подаёт заявку на депозит")
+Rel(bank, telecom, "Отправляет СМС-уведомления")
+Rel(bank, partnerCC, "Передаёт заявки для обработки")
+
+Rel(callCenter, bank, "Работает с заявками клиентов")
+Rel(back, bank, "Обрабатывает заявки и открывает депозиты")
+Rel(front, bank, "Проводит идентификацию клиентов в отделении")
+
+@enduml
