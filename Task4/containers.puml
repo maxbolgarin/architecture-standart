@@ -1,0 +1,20 @@
+
+@startuml containers
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(operator, "Оператор кол-центра", "Консультирует клиентов")
+Person(partnerOperator, "Оператор партнёрского кол-центра", "Консультирует клиентов")
+
+System_Boundary(s1, "Платформа банка") {
+    Container(abs, "АБС", "Oracle + PL/SQL", "Управление актуальными ставками")
+    Container(callCenter, "Система кол-центра", "React + Spring Boot", "Доступ к ставкам для операторов")
+}
+
+System_Ext(partnerSystem, "Партнёрский колл-центр")
+
+Rel(abs, partnerSystem, "Файл со ставками")
+Rel(partnerSystem, partnerOperator, "Ставки")
+Rel(abs, callCenter, "Ставки")
+Rel(callCenter, operator, "Ставки")
+
+@enduml 

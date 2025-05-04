@@ -1,0 +1,16 @@
+
+@startuml context
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(callCenterAgent, "Оператор кол-центра", "Консультирует клиентов")
+Person(partnerCallCenter, "Партнёрский кол-центр", "Консультирует клиентов")
+
+System(bank, "Платформа банка")
+
+System_Ext(partnerSystem, "Партнёрский колл-центр")
+
+Rel(bank, callCenterAgent, "Ставки")
+Rel(bank, partnerSystem, "Файл со ставками")
+Rel(partnerSystem, partnerCallCenter, "Ставки")
+
+@enduml
